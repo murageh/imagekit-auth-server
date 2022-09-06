@@ -58,6 +58,6 @@ app.listen(port, '0.0.0.0', (err) => {
 
 // 404
 app.use((req, res, next) => {
-    res.status(404).send("Sorry can't find that!");
     logger.info(`404 METHOD:${req.method} ${req.originalUrl} body:${JSON.stringify(req.body)}`);
+    next()
 });
