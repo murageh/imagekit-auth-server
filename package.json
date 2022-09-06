@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/geshan/expressjs-structure.git"
+    "url": "git+https://github.com/murageh/imagekit-auth-server.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/geshan/expressjs-structure/issues"
+    "url": "https://github.com/murageh/imagekit-auth-server/issues"
   },
-  "homepage": "https://github.com/geshan/expressjs-structure#readme",
+  "homepage": "https://github.com/murageh/imagekit-auth-server#readme",
   "dependencies": {
     "body-parser": "^1.19.2",
     "cors": "^2.8.5",
