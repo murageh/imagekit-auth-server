@@ -37,6 +37,10 @@ app.use(errorHandler);
 app.get('/', (req, res) => {
   res.json({'message': 'ok'});
 })
+
+app.get('/test', (req, res) => {
+    res.redirect(301, 'igas://links/orders');
+})
 // For imagekit uploads
 app.use('/upload', uploadsRouter);
 
