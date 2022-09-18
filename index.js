@@ -38,8 +38,8 @@ app.get('/', (req, res) => {
   res.json({'message': 'ok'});
 })
 
-app.get('/test', (req, res) => {
-    res.redirect(301, 'igas://links/orders');
+app.get('/app', (req, res) => {
+    res.redirect(301, 'igas://links/');
 })
 // For imagekit uploads
 app.use('/upload', uploadsRouter);
