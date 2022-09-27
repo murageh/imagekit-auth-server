@@ -27,7 +27,7 @@ function errorHandler(err, req, res, next) {
         return next(err);
     }
     res.status(500);
-    res.render('error', { error: err });
+    res.render('error', {error: err});
 }
 
 app.use(methodOverride());
@@ -35,10 +35,15 @@ app.use(logErrors);
 app.use(errorHandler);
 
 app.get('/', (req, res) => {
-  res.json({'message': 'ok'});
+    res.json({'message': 'ok'});
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    logger.info(`${ip} ${req.method} ${req.originalUrl} body:${JSON.stringify(req.body)}`);
 })
 
 app.get('/app', (req, res) => {
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    logger.info(`${ip} ${req.method} ${req.originalUrl} body:${JSON.stringify(req.body)}`);
+
     res.redirect(301, 'igas://links/');
 })
 // For imagekit uploads
@@ -46,13 +51,15 @@ app.use('/upload', uploadsRouter);
 
 /* Error handler middleware */
 app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-  console.error(err.message, err.stack);
-  res.status(statusCode).json({success: false, 'message': err.message});
+    const statusCode = err.statusCode || 500;
+    console.error(err.message, err.stack);
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    logger.info(`${ip} ${req.method} ${req.originalUrl} body:${JSON.stringify(req.body)}`);
+    res.status(statusCode).json({success: false, 'message': err.message});
 });
 
 app.listen(port, '0.0.0.0', (err) => {
-  console.log(`App listening at http://localhost:${port}`)
+    console.log(`App listening at http://localhost:${port}`)
     if (err) {
         console.log('Error in server setup');
         logger.info(`SETUP ERROR: ${JSON.stringify(err)}`);
@@ -63,6 +70,8 @@ app.listen(port, '0.0.0.0', (err) => {
 
 // 404
 app.use((req, res, next) => {
-    logger.info(`404 METHOD:${req.method} ${req.originalUrl} body:${JSON.stringify(req.body)}`);
-    next()
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    logger.info(`${ip} ERR 404 ${req.method} ${req.originalUrl} body:${JSON.stringify(req.body)}`);
+    // next()
+    res.status(403).send();
 });
