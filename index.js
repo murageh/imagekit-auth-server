@@ -44,7 +44,7 @@ app.get('/app', (req, res) => {
     const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     logger.info(`${ip} ${req.method} ${req.originalUrl} body:${JSON.stringify(req.body)}`);
 
-    res.redirect(301, 'igas://links/');
+    res.redirect(301, process.env.REDIRECTION_URL);
 })
 // For imagekit uploads
 app.use('/upload', uploadsRouter);
